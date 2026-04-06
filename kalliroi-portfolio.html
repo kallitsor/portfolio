@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kalliroi Tsormpatzoglou — Project Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@300..600&display=swap" rel="stylesheet">
+<style>
+/* ── Design Tokens ─────────────────────────────── */
+:root,[data-theme="light"]{
+  --color-bg:#f5f4f0;--color-surface:#f9f8f5;--color-surface-2:#ffffff;
+  --color-surface-offset:#ede9e3;--color-divider:#ddd9d2;--color-border:#d4cfc8;
+  --color-text:#201e18;--color-text-muted:#7a7770;--color-text-faint:#b8b5af;
+  --color-text-inverse:#f5f4f0;
+  --color-primary:#1a6b5e;--color-primary-hover:#14534a;--color-primary-active:#0e3b34;
+  --color-primary-highlight:#cddcd8;
+  --color-accent:#8b6914;--color-accent-highlight:#e8dfc8;
+  --shadow-sm:0 1px 3px oklch(0.2 0.01 80/0.07);
+  --shadow-md:0 4px 14px oklch(0.2 0.01 80/0.09);
+  --shadow-lg:0 12px 36px oklch(0.2 0.01 80/0.13);
+  --radius-sm:.375rem;--radius-md:.5rem;--radius-lg:.75rem;--radius-xl:1rem;--radius-full:9999px;
+  --space-1:.25rem;--space-2:.5rem;--space-3:.75rem;--space-4:1rem;--space-5:1.25rem;
+  --space-6:1.5rem;--space-8:2rem;--space-10:2.5rem;--space-12:3rem;--space-16:4rem;
+  --space-20:5rem;--space-24:6rem;
+  --text-xs:clamp(.75rem,.7rem + .25vw,.875rem);
+  --text-sm:clamp(.875rem,.8rem + .35vw,1rem);
+  --text-base:clamp(1rem,.95rem + .25vw,1.125rem);
+  --text-lg:clamp(1.125rem,1rem + .75vw,1.5rem);
+  --text-xl:clamp(1.5rem,1.2rem + 1.25vw,2.25rem);
+  --text-2xl:clamp(2rem,1.2rem + 2.5vw,3.5rem);
+  --font-display:'Instrument Serif',Georgia,serif;
+  --font-body:'DM Sans','Helvetica Neue',sans-serif;
+  --transition:180ms cubic-bezier(0.16,1,0.3,1);
+}
+[data-theme="dark"]{
+  --color-bg:#161513;--color-surface:#1c1b18;--color-surface-2:#222120;
+  --color-surface-offset:#1f1e1b;--color-divider:#2a2927;--color-border:#38372f;
+  --color-text:#cccbc8;--color-text-muted:#79776f;--color-text-faint:#58574f;
+  --color-text-inverse:#222120;
+  --color-primary:#4e9e8c;--color-primary-hover:#2e8270;--color-primary-active:#1d665a;
+  --color-primary-highlight:#2a3833;
+  --color-accent:#d4a843;--color-accent-highlight:#3a3020;
+  --shadow-sm:0 1px 3px oklch(0 0 0/.2);--shadow-md:0 4px 14px oklch(0 0 0/.3);
+  --shadow-lg:0 12px 36px oklch(0 0 0/.45);
+}
+@media(prefers-color-scheme:dark){:root:not([data-theme]){
+  --color-bg:#161513;--color-surface:#1c1b18;--color-surface-2:#222120;
+  --color-surface-offset:#1f1e1b;--color-divider:#2a2927;--color-border:#38372f;
+  --color-text:#cccbc8;--color-text-muted:#79776f;--color-text-faint:#58574f;
+  --color-text-inverse:#222120;
+  --color-primary:#4e9e8c;--color-primary-hover:#2e8270;--color-primary-active:#1d665a;
+  --color-primary-highlight:#2a3833;
+  --color-accent:#d4a843;--color-accent-highlight:#3a3020;
+  --shadow-sm:0 1px 3px oklch(0 0 0/.2);--shadow-md:0 4px 14px oklch(0 0 0/.3);
+  --shadow-lg:0 12px 36px oklch(0 0 0/.45);
+}}
+/* ── Reset ─────────────────────────────────────── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased;scroll-padding-top:var(--space-16)}
+body{min-height:100dvh;font-family:var(--font-body);font-size:var(--text-base);
+  color:var(--color-text);background:var(--color-bg);line-height:1.6}
+img,picture,video,canvas,svg{display:block;max-width:100%;height:auto}
+ul[role="list"]{list-style:none}
+input,button,textarea,select{font:inherit;color:inherit}
+h1,h2,h3,h4,h5,h6{text-wrap:balance;line-height:1.2}
+p,li{text-wrap:pretty;max-width:70ch}
+button{cursor:pointer;background:none;border:none}
+a,button,[role="button"]{transition:color var(--transition),background var(--transition),
+  border-color var(--transition),box-shadow var(--transition),opacity var(--transition)}
+:focus-visible{outline:2px solid var(--color-primary);outline-offset:3px;border-radius:var(--radius-sm)}
+
+/* ── Lock Screen ───────────────────────────────── */
+#lock-screen{
+  position:fixed;inset:0;z-index:1000;
+  display:flex;align-items:center;justify-content:center;
+  background:var(--color-bg);
+  transition:opacity .4s ease,visibility .4s ease;
+}
+#lock-screen.hidden{opacity:0;visibility:hidden;pointer-events:none}
+.lock-card{
+  background:var(--color-surface-2);border:1px solid var(--color-border);
+  border-radius:var(--radius-xl);padding:var(--space-12) var(--space-10);
+  box-shadow:var(--shadow-lg);max-width:420px;width:90%;text-align:center;
+}
+.lock-logo{
+  width:52px;height:52px;margin:0 auto var(--space-6);
+  background:var(--color-primary);border-radius:var(--radius-lg);
+  display:flex;align-items:center;justify-content:center;
+}
+.lock-logo svg{color:#fff}
+.lock-card h1{font-family:var(--font-display);font-size:var(--text-xl);
+  color:var(--color-text);margin-bottom:var(--space-2);font-weight:400}
+.lock-card .subtitle{font-size:var(--text-sm);color:var(--color-text-muted);
+  margin-bottom:var(--space-8)}
+.lock-input-wrap{position:relative;margin-bottom:var(--space-3)}
+.lock-input-wrap input{
+  width:100%;padding:var(--space-3) var(--space-4);
+  border:1.5px solid var(--color-border);border-radius:var(--radius-md);
+  background:var(--color-surface);color:var(--color-text);
+  font-size:var(--text-base);letter-spacing:.08em;
+  transition:border-color var(--transition),box-shadow var(--transition);
+}
+.lock-input-wrap input:focus{
+  outline:none;border-color:var(--color-primary);
+  box-shadow:0 0 0 3px oklch(from var(--color-primary) l c h/.15);
+}
+.lock-error{font-size:var(--text-xs);color:#a12c7b;min-height:1.2em;
+  margin-bottom:var(--space-4);display:block}
+.btn-unlock{
+  width:100%;padding:var(--space-3) var(--space-6);
+  background:var(--color-primary);color:#fff;
+  border-radius:var(--radius-md);font-size:var(--text-sm);font-weight:500;
+  letter-spacing:.02em;
+}
+.btn-unlock:hover{background:var(--color-primary-hover)}
+.btn-unlock:active{background:var(--color-primary-active)}
+.lock-note{font-size:var(--text-xs);color:var(--color-text-faint);margin-top:var(--space-6)}
+
+/* ── Nav ───────────────────────────────────────── */
+nav{
+  position:sticky;top:0;z-index:100;
+  background:oklch(from var(--color-bg) l c h/.92);
+  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--color-divider);
+}
+.nav-inner{
+  max-width:960px;margin:0 auto;padding:0 var(--space-6);
+  display:flex;align-items:center;justify-content:space-between;height:56px;
+}
+.nav-brand{display:flex;align-items:center;gap:var(--space-3);text-decoration:none;color:var(--color-text)}
+.nav-brand-mark{
+  width:32px;height:32px;background:var(--color-primary);
+  border-radius:var(--radius-sm);display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;
+}
+.nav-brand-mark svg{color:#fff}
+.nav-name{font-family:var(--font-display);font-size:var(--text-base);font-weight:400}
+.nav-links{display:flex;align-items:center;gap:var(--space-6)}
+.nav-links a{
+  font-size:var(--text-sm);color:var(--color-text-muted);text-decoration:none;
+}
+.nav-links a:hover{color:var(--color-text)}
+.theme-btn{
+  width:36px;height:36px;border-radius:var(--radius-full);
+  color:var(--color-text-muted);display:flex;align-items:center;justify-content:center;
+}
+.theme-btn:hover{background:var(--color-surface-offset);color:var(--color-text)}
+
+/* ── Hero ──────────────────────────────────────── */
+.hero{
+  max-width:960px;margin:0 auto;
+  padding:clamp(var(--space-12),8vw,var(--space-24)) var(--space-6) clamp(var(--space-8),5vw,var(--space-16));
+  display:grid;grid-template-columns:1fr 1fr;gap:var(--space-12);align-items:center;
+}
+@media(max-width:640px){.hero{grid-template-columns:1fr}}
+.hero-text{}
+.hero-eyebrow{
+  display:inline-flex;align-items:center;gap:var(--space-2);
+  font-size:var(--text-xs);color:var(--color-primary);letter-spacing:.06em;
+  text-transform:uppercase;font-weight:500;margin-bottom:var(--space-4);
+}
+.hero-dot{width:6px;height:6px;border-radius:50%;background:var(--color-primary)}
+.hero h1{
+  font-family:var(--font-display);font-size:var(--text-2xl);
+  font-weight:400;color:var(--color-text);margin-bottom:var(--space-4);
+  line-height:1.1;
+}
+.hero h1 em{color:var(--color-primary);font-style:italic}
+.hero-desc{font-size:var(--text-base);color:var(--color-text-muted);line-height:1.7;
+  margin-bottom:var(--space-8)}
+.hero-meta{display:flex;flex-wrap:wrap;gap:var(--space-3)}
+.badge{
+  display:inline-flex;align-items:center;gap:var(--space-2);
+  font-size:var(--text-xs);padding:var(--space-1) var(--space-3);
+  border-radius:var(--radius-full);background:var(--color-surface-offset);
+  color:var(--color-text-muted);border:1px solid var(--color-border);
+}
+.badge.accent{background:var(--color-accent-highlight);color:var(--color-accent);border-color:var(--color-accent-highlight)}
+.hero-stats{
+  display:grid;grid-template-columns:1fr 1fr;gap:var(--space-4);
+}
+.stat-card{
+  background:var(--color-surface-2);border:1px solid var(--color-border);
+  border-radius:var(--radius-lg);padding:var(--space-5) var(--space-5);
+  box-shadow:var(--shadow-sm);
+}
+.stat-card .stat-num{
+  font-family:var(--font-display);font-size:var(--text-xl);
+  color:var(--color-primary);font-weight:400;line-height:1;margin-bottom:var(--space-1)
+}
+.stat-card .stat-label{font-size:var(--text-xs);color:var(--color-text-muted)}
+
+/* ── Section ───────────────────────────────────── */
+.section{max-width:960px;margin:0 auto;padding:0 var(--space-6) clamp(var(--space-12),6vw,var(--space-20))}
+.section-header{margin-bottom:var(--space-8)}
+.section-header h2{
+  font-family:var(--font-display);font-size:var(--text-xl);
+  font-weight:400;color:var(--color-text);margin-bottom:var(--space-2)
+}
+.section-header p{font-size:var(--text-sm);color:var(--color-text-muted)}
+.section-divider{max-width:960px;margin:0 auto var(--space-1);
+  border:none;border-top:1px solid var(--color-divider);padding:0 var(--space-6)}
+
+/* ── Project Cards ─────────────────────────────── */
+.projects-grid{display:grid;grid-template-columns:1fr 1fr;gap:var(--space-6)}
+@media(max-width:640px){.projects-grid{grid-template-columns:1fr}}
+
+.project-card{
+  background:var(--color-surface-2);border:1px solid var(--color-border);
+  border-radius:var(--radius-xl);overflow:hidden;box-shadow:var(--shadow-sm);
+  display:flex;flex-direction:column;
+  transition:box-shadow var(--transition),transform var(--transition);
+}
+.project-card:hover{box-shadow:var(--shadow-md);transform:translateY(-2px)}
+.project-card.featured{grid-column:span 2}
+@media(max-width:640px){.project-card.featured{grid-column:span 1}}
+
+.project-header{padding:var(--space-6);padding-bottom:0}
+.project-tag{
+  display:inline-flex;align-items:center;gap:var(--space-1);
+  font-size:var(--text-xs);font-weight:500;letter-spacing:.05em;text-transform:uppercase;
+  color:var(--color-primary);margin-bottom:var(--space-3)
+}
+.project-card h3{
+  font-family:var(--font-display);font-size:var(--text-lg);
+  font-weight:400;color:var(--color-text);margin-bottom:var(--space-2);line-height:1.2
+}
+.project-period{font-size:var(--text-xs);color:var(--color-text-faint);margin-bottom:var(--space-4)}
+.project-body{padding:0 var(--space-6) var(--space-6);flex:1;display:flex;flex-direction:column;gap:var(--space-4)}
+.project-desc{font-size:var(--text-sm);color:var(--color-text-muted);line-height:1.65}
+.project-highlights{display:flex;flex-direction:column;gap:var(--space-2)}
+.highlight{
+  display:flex;align-items:flex-start;gap:var(--space-2);
+  font-size:var(--text-xs);color:var(--color-text-muted);
+}
+.highlight-dot{
+  width:5px;height:5px;border-radius:50%;background:var(--color-primary);
+  flex-shrink:0;margin-top:6px;
+}
+.project-tags{display:flex;flex-wrap:wrap;gap:var(--space-2);margin-top:auto;padding-top:var(--space-2)}
+.tag-chip{
+  font-size:var(--text-xs);padding:2px var(--space-2);
+  border-radius:var(--radius-full);border:1px solid var(--color-border);
+  color:var(--color-text-muted);background:var(--color-surface-offset);
+}
+
+/* Featured layout */
+.project-card.featured .project-inner{
+  display:grid;grid-template-columns:3fr 2fr;
+}
+@media(max-width:640px){.project-card.featured .project-inner{grid-template-columns:1fr}}
+.project-award{
+  margin:0 var(--space-6) var(--space-6);
+  background:var(--color-accent-highlight);border:1px solid var(--color-accent-highlight);
+  border-radius:var(--radius-md);padding:var(--space-3) var(--space-4);
+  display:flex;align-items:center;gap:var(--space-2);
+}
+.project-award span{font-size:var(--text-xs);color:var(--color-accent);font-weight:500}
+.project-metrics{
+  padding:var(--space-6);border-left:1px solid var(--color-border);
+  display:flex;flex-direction:column;gap:var(--space-4);
+}
+@media(max-width:640px){.project-metrics{border-left:none;border-top:1px solid var(--color-border)}}
+.metric{display:flex;flex-direction:column;gap:2px}
+.metric-val{font-family:var(--font-display);font-size:var(--text-xl);
+  color:var(--color-primary);line-height:1}
+.metric-label{font-size:var(--text-xs);color:var(--color-text-muted)}
+
+/* ── Other Experience ──────────────────────────── */
+.exp-list{display:flex;flex-direction:column;gap:var(--space-5)}
+.exp-card{
+  background:var(--color-surface-2);border:1px solid var(--color-border);
+  border-radius:var(--radius-lg);padding:var(--space-5) var(--space-6);
+  box-shadow:var(--shadow-sm);display:grid;grid-template-columns:auto 1fr;gap:var(--space-5);
+  align-items:start;
+}
+.exp-icon{
+  width:44px;height:44px;border-radius:var(--radius-md);
+  background:var(--color-primary-highlight);
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+}
+.exp-icon svg{color:var(--color-primary)}
+.exp-title{font-family:var(--font-display);font-size:var(--text-lg);
+  font-weight:400;margin-bottom:var(--space-1)}
+.exp-sub{font-size:var(--text-xs);color:var(--color-text-muted);margin-bottom:var(--space-3)}
+.exp-desc{font-size:var(--text-sm);color:var(--color-text-muted);line-height:1.65}
+
+/* ── Awards ────────────────────────────────────── */
+.awards-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--space-4)}
+@media(max-width:640px){.awards-grid{grid-template-columns:1fr}}
+.award-card{
+  background:var(--color-surface-2);border:1px solid var(--color-border);
+  border-radius:var(--radius-lg);padding:var(--space-5);box-shadow:var(--shadow-sm);
+}
+.award-icon{font-size:1.4rem;margin-bottom:var(--space-3)}
+.award-card h4{font-family:var(--font-display);font-size:var(--text-base);
+  font-weight:400;margin-bottom:var(--space-2)}
+.award-card p{font-size:var(--text-xs);color:var(--color-text-muted);line-height:1.5}
+
+/* ── Footer ────────────────────────────────────── */
+footer{
+  border-top:1px solid var(--color-divider);
+  background:var(--color-surface);
+  padding:var(--space-8) var(--space-6);
+  text-align:center;
+}
+footer p{font-size:var(--text-xs);color:var(--color-text-faint)}
+footer a{color:var(--color-primary);text-decoration:none}
+footer a:hover{text-decoration:underline}
+
+/* ── Scrollbar ─────────────────────────────────── */
+::-webkit-scrollbar{width:8px}
+::-webkit-scrollbar-track{background:var(--color-bg)}
+::-webkit-scrollbar-thumb{background:var(--color-border);border-radius:var(--radius-full)}
+</style>
+</head>
+<body>
+
+<!-- LOCK SCREEN -->
+<div id="lock-screen" role="dialog" aria-modal="true" aria-label="Portfolio access">
+  <div class="lock-card">
+    <div class="lock-logo">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+      </svg>
+    </div>
+    <h1>Kalliroi Tsormpatzoglou</h1>
+    <p class="subtitle">This portfolio is shared privately.<br>Please enter the access password.</p>
+    <div class="lock-input-wrap">
+      <input type="password" id="pw-input" placeholder="Access password" autocomplete="current-password"
+        aria-label="Portfolio access password" />
+    </div>
+    <span class="lock-error" id="pw-error" role="alert" aria-live="polite"></span>
+    <button class="btn-unlock" id="unlock-btn">View Portfolio</button>
+    <p class="lock-note">Reach Kalliroi at <a href="mailto:kallitsor@gmail.com">kallitsor@gmail.com</a><br>to request access.</p>
+  </div>
+</div>
+
+<!-- MAIN CONTENT (hidden until unlocked) -->
+<main id="portfolio" style="display:none" aria-hidden="true">
+
+  <nav>
+    <div class="nav-inner">
+      <a href="#top" class="nav-brand">
+        <div class="nav-brand-mark">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true">
+            <path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/>
+          </svg>
+        </div>
+        <span class="nav-name">Kalliroi T.</span>
+      </a>
+      <div class="nav-links">
+        <a href="#projects">Projects</a>
+        <a href="#experience">Experience</a>
+        <a href="#awards">Awards</a>
+        <button class="theme-btn" data-theme-toggle aria-label="Toggle dark mode">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <section class="hero" id="top" aria-label="Introduction">
+    <div class="hero-text">
+      <p class="hero-eyebrow"><span class="hero-dot"></span>Project Portfolio</p>
+      <h1>Engineering<br><em>systems</em> for a<br>sustainable world.</h1>
+      <p class="hero-desc">BSc Industrial Engineering student at TU/e with a focus on sustainability systems, quantitative modeling, and data-driven decision-making. Based in Eindhoven, NL.</p>
+      <div class="hero-meta">
+        <span class="badge">TU/e · Industrial Engineering</span>
+        <span class="badge accent">🏆 SDG-Challenge NL 2025 Winner</span>
+        <span class="badge">Eindhoven, NL</span>
+      </div>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-card">
+        <div class="stat-num">40</div>
+        <div class="stat-label">Indicators in SDG-13 framework</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">17</div>
+        <div class="stat-label">SDGs mapped in systems model</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">5</div>
+        <div class="stat-label">Research & professional roles</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">5</div>
+        <div class="stat-label">Languages spoken</div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="section-divider">
+
+  <!-- PROJECTS -->
+  <section class="section" id="projects" aria-label="Projects">
+    <div class="section-header">
+      <h2>Projects</h2>
+      <p>Selected research and engineering projects demonstrating analytical depth and systems thinking.</p>
+    </div>
+
+    <div class="projects-grid">
+
+      <!-- Featured Project -->
+      <article class="project-card featured" aria-label="Movares SDG-13 Framework">
+        <div class="project-inner">
+          <div>
+            <div class="project-header">
+              <p class="project-tag">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                Featured · Systems Engineering
+              </p>
+              <h3>SDG-13 Performance Measurement Framework</h3>
+              <p class="project-period">Nov 2025 – Jan 2026 · Movares, Arnhem</p>
+            </div>
+            <div class="project-body">
+              <p class="project-desc">Led the design of a comprehensive, modeling-driven integrated scorecard for measuring the SDG-13 (Climate Action) contribution of residential building projects within the Dutch built environment — in partnership with SDG-Challenge Netherlands by Soapbox.</p>
+              <div class="project-highlights">
+                <div class="highlight"><div class="highlight-dot"></div><span>Authored PMF for SDG-13 integrating 40 indicators across 5 Dutch policy themes: climate-neutrality, heat, water nuisance, drought, and flooding</span></div>
+                <div class="highlight"><div class="highlight-dot"></div><span>Built statistical normalization model (0–1 scale) with weighted parameters producing a Global Performance Rating (GPR)</span></div>
+                <div class="highlight"><div class="highlight-dot"></div><span>Designed covariance matrix for synergies and trade-offs between mitigation & adaptation indicators</span></div>
+                <div class="highlight"><div class="highlight-dot"></div><span>Synchronized with BENG, Convenant Toekomstbestendig Bouwen 2.0, and KNMI 2023 scenarios</span></div>
+                <div class="highlight"><div class="highlight-dot"></div><span>Mapped SDG-13 systemic influence on all 16 other SDGs as a "systems anchor"</span></div>
+              </div>
+              <div class="project-tags">
+                <span class="tag-chip">Statistical Modeling</span>
+                <span class="tag-chip">Systems Engineering</span>
+                <span class="tag-chip">SDG Integration</span>
+                <span class="tag-chip">Climate Policy</span>
+                <span class="tag-chip">BENG Standards</span>
+                <span class="tag-chip">KNMI 2023</span>
+              </div>
+            </div>
+            <div class="project-award">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/></svg>
+              <span>Winner — Audience Award · SDG-Challenge Netherlands 2025</span>
+            </div>
+          </div>
+          <div class="project-metrics" aria-label="Project metrics">
+            <div class="metric"><span class="metric-val">7</span><span class="metric-label">Team members coordinated</span></div>
+            <div class="metric"><span class="metric-val">40</span><span class="metric-label">Climate indicators authored</span></div>
+            <div class="metric"><span class="metric-val">5</span><span class="metric-label">Policy theme domains</span></div>
+            <div class="metric"><span class="metric-val">17</span><span class="metric-label">SDGs in systems map</span></div>
+            <div class="metric"><span class="metric-val">3</span><span class="metric-label">Months to full delivery</span></div>
+          </div>
+        </div>
+      </article>
+
+      <!-- Project 2 -->
+      <article class="project-card" aria-label="IB Personal Project">
+        <div class="project-header">
+          <p class="project-tag">Research · IB Personal Project</p>
+          <h3>IB Personal Project — Personal Project Excellence Award</h3>
+          <p class="project-period">2021 – 2023 · International School of Athens</p>
+        </div>
+        <div class="project-body">
+          <p class="project-desc">Received the Personal Project Excellence Award for a self-directed research project completed as part of the International Baccalaureate Middle Years Programme — demonstrating independent research design, analytical rigor, and written communication.</p>
+          <div class="project-tags">
+            <span class="tag-chip">Independent Research</span>
+            <span class="tag-chip">IB MYP</span>
+            <span class="tag-chip">Analytical Writing</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- Project 3 -->
+      <article class="project-card" aria-label="SDG-13 Research Honor">
+        <div class="project-header">
+          <p class="project-tag">Research · Climate Modeling</p>
+          <h3>Honor for Innovative Research on SDG 13</h3>
+          <p class="project-period">2023 – 2025 · TU/e</p>
+        </div>
+        <div class="project-body">
+          <p class="project-desc">Recognized with an honor for innovative academic research on SDG 13 — Climate Action — conducted during BSc studies at TU/e. Applied quantitative modeling and systems analysis to assess climate adaptation metrics in the built environment.</p>
+          <div class="project-tags">
+            <span class="tag-chip">Quantitative Modeling</span>
+            <span class="tag-chip">Climate Adaptation</span>
+            <span class="tag-chip">TU/e Research</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- Project 4: NMR Lab -->
+      <article class="project-card" aria-label="NMR Lab Research">
+        <div class="project-header">
+          <p class="project-tag">Laboratory · Materials Science</p>
+          <h3>Nuclear Magnetic Resonance Laboratory Research</h3>
+          <p class="project-period">Jun – Jul 2021 · NCSR "Demokritos", Athens</p>
+        </div>
+        <div class="project-body">
+          <p class="project-desc">Conducted hands-on research at the Institute of Nanoscience and Nanotechnology, exploring NMR measuring processes and material characterization techniques across Chemistry, SEM, and TEM labs. Delivered a formal lab report and analytical presentation.</p>
+          <div class="project-highlights">
+            <div class="highlight"><div class="highlight-dot"></div><span>Physics and instrumentation of NMR devices and measuring systems</span></div>
+            <div class="highlight"><div class="highlight-dot"></div><span>Lab visits: Chemistry, Scanning & Transmission Electron Microscopy</span></div>
+            <div class="highlight"><div class="highlight-dot"></div><span>Applications in material characterization and medicine</span></div>
+          </div>
+          <div class="project-tags">
+            <span class="tag-chip">NMR Spectroscopy</span>
+            <span class="tag-chip">Nanotechnology</span>
+            <span class="tag-chip">Experimental Design</span>
+            <span class="tag-chip">Lab Reporting</span>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <hr class="section-divider">
+
+  <!-- EXPERIENCE -->
+  <section class="section" id="experience" aria-label="Other experience">
+    <div class="section-header">
+      <h2>Other Experience</h2>
+      <p>Professional and academic roles beyond primary projects.</p>
+    </div>
+    <div class="exp-list">
+
+      <div class="exp-card">
+        <div class="exp-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+          </svg>
+        </div>
+        <div>
+          <p class="exp-title">Tutor & Mentor</p>
+          <p class="exp-sub">International School of Athens · Jan 2020 – Apr 2023 (3 yrs 4 mo)</p>
+          <p class="exp-desc">Trained and advised middle and high school students in Mathematics, Physics, Chemistry, Economics, and English — developing communication, explanation, and adaptive teaching skills.</p>
+        </div>
+      </div>
+
+      <div class="exp-card">
+        <div class="exp-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+          </svg>
+        </div>
+        <div>
+          <p class="exp-title">BSc Industrial Engineering</p>
+          <p class="exp-sub">Eindhoven University of Technology · Sep 2023 – present</p>
+          <p class="exp-desc">Studying operations, supply chain, data analytics, and systems engineering at one of Europe's leading technical universities.</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <hr class="section-divider">
+
+  <!-- AWARDS -->
+  <section class="section" id="awards" aria-label="Awards and certifications">
+    <div class="section-header">
+      <h2>Awards & Recognition</h2>
+    </div>
+    <div class="awards-grid">
+      <div class="award-card">
+        <div class="award-icon">🏆</div>
+        <h4>Winner — Audience Award</h4>
+        <p>SDG-Challenge Netherlands 2025</p>
+      </div>
+      <div class="award-card">
+        <div class="award-icon">🎖</div>
+        <h4>Honor for Innovative Research on SDG 13</h4>
+        <p>TU/e recognition for climate modeling research</p>
+      </div>
+      <div class="award-card">
+        <div class="award-icon">📘</div>
+        <h4>Personal Project Excellence Award</h4>
+        <p>International Baccalaureate MYP</p>
+      </div>
+      <div class="award-card">
+        <div class="award-icon">✒️</div>
+        <h4>1st Place — Panhellenic Greek Literature Competition</h4>
+        <p>Under UNESCO</p>
+      </div>
+      <div class="award-card">
+        <div class="award-icon">🎓</div>
+        <h4>"Highest Honors" / IB Scholar</h4>
+        <p>International Baccalaureate Diploma Programme</p>
+      </div>
+      <div class="award-card">
+        <div class="award-icon">📜</div>
+        <h4>Certifications</h4>
+        <p>AI in Business · Girls' Education Network Leadership · Nestlé Needs YOUth Skillathon</p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>Kalliroi Tsormpatzoglou · <a href="mailto:kallitsor@gmail.com">kallitsor@gmail.com</a> · <a href="https://linkedin.com/in/kalliroi" target="_blank" rel="noopener noreferrer">LinkedIn</a></p>
+    <p style="margin-top:var(--space-2)">This portfolio is private and shared selectively with recruiters.</p>
+  </footer>
+
+</main>
+
+<script>
+// Theme toggle
+(function(){
+  const r=document.documentElement;
+  let d=matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light';
+  r.setAttribute('data-theme',d);
+  document.addEventListener('click',function(e){
+    const btn=e.target.closest('[data-theme-toggle]');
+    if(!btn)return;
+    d=d==='dark'?'light':'dark';
+    r.setAttribute('data-theme',d);
+    btn.setAttribute('aria-label','Switch to '+(d==='dark'?'light':'dark')+' mode');
+    btn.innerHTML=d==='dark'
+      ?'<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>'
+      :'<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>';
+  });
+})();
+
+// Lock screen
+(function(){
+  // *** CHANGE THE PASSWORD BELOW ***
+  const PASSWORD = 'Kalliroi2025';
+
+  const lockScreen = document.getElementById('lock-screen');
+  const portfolio  = document.getElementById('portfolio');
+  const pwInput    = document.getElementById('pw-input');
+  const pwError    = document.getElementById('pw-error');
+  const unlockBtn  = document.getElementById('unlock-btn');
+
+  function unlock(){
+    if(pwInput.value === PASSWORD){
+      lockScreen.classList.add('hidden');
+      portfolio.style.display = 'block';
+      portfolio.removeAttribute('aria-hidden');
+      document.body.style.overflow = '';
+    } else {
+      pwError.textContent = 'Incorrect password. Please check with Kalliroi.';
+      pwInput.value = '';
+      pwInput.focus();
+      // Shake
+      pwInput.style.transition='transform .08s';
+      pwInput.style.transform='translateX(-6px)';
+      setTimeout(()=>{ pwInput.style.transform='translateX(6px)'; },80);
+      setTimeout(()=>{ pwInput.style.transform=''; },160);
+    }
+  }
+
+  unlockBtn.addEventListener('click', unlock);
+  pwInput.addEventListener('keydown', e=>{ if(e.key==='Enter') unlock(); });
+  document.body.style.overflow = 'hidden';
+})();
+</script>
+</body>
+</html>
